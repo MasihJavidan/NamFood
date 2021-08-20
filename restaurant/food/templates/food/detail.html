@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <img width="25%" src="{{food.photo.url}}">
+    <li>{{food.name}}</li>
+    {{food.description}}
+    <li>{{food.price}}T</li>
+{% endblock content %}
+    

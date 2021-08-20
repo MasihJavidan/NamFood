@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <!-- Start All Pages -->
+	<div class="all-page-title page-breadcrumb">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>مقاله</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End All Pages -->
+	
+	<!-- Start blog details -->
+	<div class="blog-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="heading-title text-center">
+						<h2>{{blog.title}}</h2>
+						<p>{{blog.description}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-8 col-lg-8 col-12">
+					<div class="blog-inner-details-page">
+						<div class="blog-inner-box">
+							<div class="side-blog-img">
+								<img class="img-fluid" src="{{blog.photo.url}}" style="height: 400px;" alt="">							
+								<div class="date-blog-up">
+									27 Fab
+								</div>
+							</div>
+							<div class="inner-blog-detail details-page">
+								<h3>{{blog.description}}</h3>
+								<ul>
+									<li><i class="zmdi zmdi-account"></i>Posted By : <span>{{blog.author.first_name}} {{blog.author.last_name}}</span></li>
+									<li>|</li>
+									<li><i class="zmdi zmdi-time"></i>Time : <span>{{blog.pub_time|date:"Y b d"}}</span></li>
+								</ul>
+								<p dir="rtl">{{blog.content|safe}}</p>
+								<blockquote>
+									<p></p>
+								</blockquote>
+								<p></p>
+							</div>
+						</div>
+						<div class="blog-comment-box">
+							<h3>Comments</h3>
+							{% for cmm in comments %}
+							    <div class="comment-item">
+								<div class="comment-item-left">
+									<img src="images/avt-img.jpg" alt="">
+								</div>
+								<div class="comment-item-right">
+									<div class="pull-left">
+										<a href="#">{{cmm.name}}</a>
+									</div>
+									<div class="pull-right">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>Time : <span>{{cmm.pub_time}}</span>
+									</div>
+									<div class="des-l">
+										<p>{{cmm.content}}</p>
+									</div>
+									<a href="#" class="right-btn-re"><i class="fa fa-reply" aria-hidden="true"></i> Reply</a>
+								</div>
+							    </div>
+							{% endfor %}
+						</div>
+						<div class="comment-respond-box">
+							<h3>Leave your comment </h3>
+							<div class="comment-respond-form">
+								<form id="commentrespondform" class="comment-form-respond row" method="POST">
+									{% csrf_token %}
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group">
+											<input id="name_com" class="form-control" name="name" placeholder="Name" type="text">
+										</div>
+										<div class="form-group">
+											<input id="email_com" class="form-control" name="email" placeholder="Your Email" type="email">
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group">
+											<textarea class="form-control" name='content' id="textarea_com" placeholder="Your Message" rows="2"></textarea>
+										</div>
+									</div>
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<button class="btn btn-submit">Submit comment</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+				<div class="col-xl-4 col-lg-4 col-md-6 col-sm-8 col-12 blog-sidebar">
+					<div class="right-side-blog">
+						<h3>Search</h3>
+						<form action="{% url 'blog:search' %}" method="get">
+						    <div class="blog-search-form">
+                                <input name="search" placeholder="Search blog" type="text">
+							    <button class="search-btn" type="submit">
+								    <i class="fa fa-search" aria-hidden="true"></i>
+							    </button>
+						    </div>
+						</form>
+						<h3>Categories</h3>
+						<div class="blog-categories">
+							<ul>
+								{% for category in categorys %}
+								<li><a href="{% url 'blog:category' category.slug %}"><span>{{category}}</span></a></li>
+								{% endfor %}
+							</ul>
+						</div>
+						<h3>Recent Post</h3>
+						<div class="post-box-blog">
+							<div class="recent-post-box">
+							    {% for recent in recents %}
+								<div class="recent-box-blog">
+									<div class="recent-img">
+										<img class="img-fluid" src="{{recent.photo.url}}" style="height: 80px; width: 80px;" alt="">
+									</div>
+									<div class="recent-info">
+										<ul>
+											<li><i class="zmdi zmdi-account"></i>Posted By : <span>{{recent.author.first_name}} {{recent.author.last_name}}</span></li>
+											<li>|</li>
+											<li><i class="zmdi zmdi-time"></i>Time : <span>{{recent.pub_time|date:"Y b d"}}</span></li>
+										</ul>
+										<h4 dir="rtl"><a href="{% url 'blog:detail' recent.slug %}">{{recent.description}}</a></h4>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<h3>Similar Post</h3>
+						<div class="post-box-blog">
+							<div class="recent-post-box">
+							    {% for sim in similar %}
+								<div class="recent-box-blog">
+									<div class="recent-img">
+										<img class="img-fluid" src="{{sim.photo.url}}" style="height: 80px; width: 80px;" alt="">
+									</div>
+									<div class="recent-info">
+										<ul>
+											<li><i class="zmdi zmdi-account"></i>Posted By : <span>{{sim.author.first_name}} {{sim.author.last_name}}</span></li>
+											<li>|</li>
+											<li><i class="zmdi zmdi-time"></i>Time : <span>{{sim.pub_time|date:"Y b d"}}</span></li>
+										</ul>
+										<h4 dir="rtl"><a href="{% url 'blog:detail' sim.slug %}">{{sim.description}}</a></h4>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<h3>Recent Tag</h3>
+						<div class="blog-tag-box">
+							<ul class="list-inline tag-list">
+								{% for tag in tags %}
+								<li class="list-inline-item"><a href="{% url 'blog:tag' tag.slug %}">{{tag}}</a></li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End details -->
+	
+{% endblock content %}
+	
+	
