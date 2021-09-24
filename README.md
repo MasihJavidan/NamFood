@@ -16,6 +16,6 @@ Step 4:
 pip install -r requirements.txt
 
 Step 5:
-ca restaurant and python manage.py runserver
+cd restaurant and python manage.py runserver
 
 
