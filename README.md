@@ -11,6 +11,8 @@ Step 3:
 on windows: Virtualenv venv
 AND 
 venv\Scripts\activate.bat
+on Linux:
+source venv/bin/activate
 
 Step 4: 
 pip install -r requirements.txt
